@@ -15,6 +15,14 @@
       "loader": "tag_helper.rb",
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/Seoul_IndoorGIS_Tag_Helper-1.0.4.rbz",
       "release_note": "Seoul IndoorGIS Tag Helper 1.0.4"
+    },
+    {
+      "id": "indoor3d",
+      "name": "Indoor3DGML Modeler",
+      "version": "1.0.0",
+      "loader": "indoor3d.rb",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/Indoor3DGML_Modeler-1.0.0.rbz",
+      "release_note": "Indoor3DGML Modeler 1.0.0"
     }
   ]
 }
