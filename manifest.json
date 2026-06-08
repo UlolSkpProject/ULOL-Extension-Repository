@@ -1,4 +1,12 @@
 {
   "schema_version": 1,
-  "extensions": []
+  "extensions": [
+    {
+      "id": "rm_helper",
+      "name": "RM Color Helper",
+      "version": "1.0.0",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/RM_Color_Helper-1.0.0.rbz",
+      "release_note": "RM Color Helper 1.0.0"
+    }
+  ]
 }
