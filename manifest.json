@@ -31,7 +31,8 @@
       "version": "1.0.0",
       "loader": "better_ruby_console.rb",
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/better_ruby_console/Better_Ruby_Console-1.0.0.rbz",
-      "release_note": "Better Ruby Console 1.0.0"
+      "release_note": "Better Ruby Console 1.0.0",
+      "source_dir": "better_ruby_console"
     }
   ]
 }
