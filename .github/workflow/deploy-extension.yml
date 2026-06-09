@@ -1,0 +1,101 @@
+name: Deploy Extension Common
+
+on:
+  workflow_call:
+    inputs:
+      extension_id:
+        required: true
+        type: string
+
+      loader_file:
+        required: true
+        type: string
+
+      visibility:
+        required: true
+        type: string
+
+      distribution:
+        required: true
+        type: string
+
+    secrets:
+      DEPLOY_REPO_TOKEN:
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  PAGES_BASE_URL: https://ulolskpproject.github.io/ULOL-Extension-Repository
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Extension Repo
+        uses: actions/checkout@v4
+
+      - name: Checkout Deploy Repo
+        uses: actions/checkout@v4
+        with:
+          repository: UlolSkpProject/ULOL-Extension-Repository
+          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          path: deploy_repo
+
+      - name: Extract Metadata
+        id: metadata
+        run: |
+          python3 deploy_repo/scripts/extract_metadata.py
+        env:
+          LOADER_FILE: ${{ inputs.loader_file }}
+
+      - name: Export Metadata
+        run: |
+          {
+            echo "EXTENSION_ID=${{ inputs.extension_id }}"
+            echo "LOADER_FILE=${{ inputs.loader_file }}"
+            echo "SOURCE_DIR=${{ inputs.loader_file }}"
+            echo "SOURCE_DIR=${SOURCE_DIR%.rb}"
+
+            echo "EXTENSION_NAME=${{ steps.metadata.outputs.name }}"
+            echo "EXTENSION_VERSION=${{ steps.metadata.outputs.version }}"
+            echo "EXTENSION_CREATOR=${{ steps.metadata.outputs.creator }}"
+            echo "EXTENSION_DESCRIPTION=${{ steps.metadata.outputs.description }}"
+          } >> "$GITHUB_ENV"
+
+      - name: Build RBZ
+        run: |
+          bash deploy_repo/scripts/build_rbz.sh
+
+      - name: Copy RBZ
+        run: |
+          mkdir -p "deploy_repo/rbz/${EXTENSION_ID}"
+          cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/${RBZ_NAME}"
+
+      - name: Update Manifest
+        run: |
+          python3 deploy_repo/scripts/update_manifest.py
+        env:
+          INPUT_VISIBILITY: ${{ inputs.visibility }}
+          INPUT_DISTRIBUTION: ${{ inputs.distribution }}
+          MANIFEST_PATH: deploy_repo/manifest.json
+          PAGES_BASE_URL: ${{ env.PAGES_BASE_URL }}
+
+      - name: Commit Manifest and RBZ
+        run: |
+          cd deploy_repo
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add manifest.json rbz
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "Deploy ${EXTENSION_ID} ${EXTENSION_VERSION}"
+          git push
