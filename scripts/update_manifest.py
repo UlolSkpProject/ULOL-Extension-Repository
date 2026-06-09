@@ -20,20 +20,32 @@ def read_env(name: str, default: str | None = None) -> str:
     return value.strip()
 
 
-def load_manifest(path: Path) -> list[dict]:
+def load_manifest(path: Path) -> tuple[dict | list, list[dict]]:
     if not path.exists():
-        return []
+        data = []
+        return data, data
 
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
 
-    if not isinstance(data, list):
-        raise RuntimeError("manifest.json must be a JSON array")
+    if isinstance(data, list):
+        return data, data
 
-    return data
+    if isinstance(data, dict):
+        extensions = data.get("extensions")
+        if extensions is None:
+            extensions = []
+            data["extensions"] = extensions
+
+        if not isinstance(extensions, list):
+            raise RuntimeError("manifest.json field 'extensions' must be a JSON array")
+
+        return data, extensions
+
+    raise RuntimeError("manifest.json must be a JSON array or an object with 'extensions' array")
 
 
-def save_manifest(path: Path, data: list[dict]) -> None:
+def save_manifest(path: Path, data: dict | list) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
     with path.open("w", encoding="utf-8") as f:
@@ -69,17 +81,17 @@ def main() -> int:
         f"{pages_base_url}/rbz/{extension_id}/{rbz_name}"
     )
 
-    manifest = load_manifest(manifest_path)
+    manifest_data, extensions = load_manifest(manifest_path)
 
     existing = None
-    for item in manifest:
+    for item in extensions:
         if item.get("id") == extension_id:
             existing = item
             break
 
     if existing is None:
         existing = {}
-        manifest.append(existing)
+        extensions.append(existing)
 
     existing.update({
         "id": extension_id,
@@ -95,9 +107,9 @@ def main() -> int:
         "distribution": distribution,
     })
 
-    manifest.sort(key=lambda item: item.get("id", ""))
+    extensions.sort(key=lambda item: item.get("id", ""))
 
-    save_manifest(manifest_path, manifest)
+    save_manifest(manifest_path, manifest_data)
 
     print("Updated manifest")
     print(f"- id: {extension_id}")
