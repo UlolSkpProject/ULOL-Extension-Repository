@@ -30,7 +30,7 @@
       "release_note": "Indoor3DGML Modeler 1.0.0",
       "source_dir": "indoor3d",
       "visibility": "visible",
-      "distribution": "active"
+      "distribution": "preview"
     },
     {
       "id": "better_ruby_console",
