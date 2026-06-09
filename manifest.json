@@ -32,7 +32,11 @@
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/RM_Color_Helper-1.0.0.rbz",
       "release_note": "RM Color Helper 1.0.0",
       "visibility": "visible",
-      "distribution": "active"
+      "distribution": "active",
+      "creator": "DKIM",
+      "description": "공간별 SketchUp 재질 생성 및 적용 도구입니다.",
+      "loader": "rm_helper.rb",
+      "source_dir": "rm_helper"
     },
     {
       "id": "tag_helper",
