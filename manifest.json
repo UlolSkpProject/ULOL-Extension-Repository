@@ -10,7 +10,9 @@
       "release_note": "Better Ruby Console 1.0.0",
       "source_dir": "better_ruby_console",
       "visibility": "hidden",
-      "distribution": "disabled"
+      "distribution": "disabled",
+      "creator": "ULOL",
+      "description": "A zsh-like Ruby console with history, clear, and API hints."
     },
     {
       "id": "indoor3d",
