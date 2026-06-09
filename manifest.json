@@ -39,11 +39,13 @@
       "name": "TAG Helper",
       "version": "1.0.4",
       "loader": "tag_helper.rb",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/Seoul_IndoorGIS_Tag_Helper-1.0.4.rbz",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/TAG_Helper-1.0.4.rbz",
       "release_note": "TAG Helper 1.0.4",
       "source_dir": "tag_helper",
       "visibility": "visible",
-      "distribution": "active"
+      "distribution": "active",
+      "creator": "DKIM",
+      "description": "객체코드표 기반 SketchUp Tag 적용 도구입니다. 선택한 Group 또는 Component Instance에 구분, 대분류, 중분류, 층 조건으로 계산한 Tag를 적용합니다."
     }
   ]
 }
