@@ -1,4 +1,4 @@
-name: Deploy Extension Common
+﻿name: Deploy Extension Common
 
 on:
   workflow_call:
@@ -20,7 +20,7 @@ on:
         type: string
 
     secrets:
-      DEPLOY_REPO_TOKEN:
+      DEPLOY_TOKEN:
         required: true
 
 permissions:
@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: UlolSkpProject/ULOL-Extension-Repository
-          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          token: ${{ secrets.DEPLOY_TOKEN }}
           path: deploy_repo
 
       - name: Extract Metadata
