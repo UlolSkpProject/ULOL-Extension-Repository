@@ -32,6 +32,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ulol-extension-repository-deploy
+  cancel-in-progress: false
+
 env:
   PAGES_BASE_URL: https://ulolskpproject.github.io/ULOL-Extension-Repository
 
@@ -85,12 +89,14 @@ jobs:
 
       - name: Extract Metadata
         id: metadata
+        shell: bash
         run: |
           python3 deploy_repo/scripts/extract_metadata.py
         env:
           LOADER_FILE: ${{ inputs.loader_file }}
 
       - name: Export Metadata
+        shell: bash
         run: |
           {
             echo "EXTENSION_ID=${{ inputs.extension_id }}"
@@ -102,15 +108,18 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Build RBZ
+        shell: bash
         run: |
           bash deploy_repo/scripts/build_rbz.sh
 
       - name: Copy RBZ
+        shell: bash
         run: |
           mkdir -p "deploy_repo/rbz/${EXTENSION_ID}"
           cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/${RBZ_NAME}"
 
       - name: Update Manifest
+        shell: bash
         run: |
           python3 deploy_repo/scripts/update_manifest.py
         env:
@@ -121,11 +130,14 @@ jobs:
           PAGES_BASE_URL: ${{ env.PAGES_BASE_URL }}
 
       - name: Commit Manifest and RBZ
+        shell: bash
         run: |
           cd deploy_repo
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+
+          git fetch origin main
 
           git add manifest.json rbz
 
@@ -135,4 +147,15 @@ jobs:
           fi
 
           git commit -m "Deploy ${EXTENSION_ID} ${EXTENSION_VERSION}"
-          git push
+
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin main; then
+              exit 0
+            fi
+
+            echo "Push failed. Retrying in $((i * 3)) seconds..."
+            sleep $((i * 3))
+          done
+
+          echo "Failed to push after retries"
+          exit 1
