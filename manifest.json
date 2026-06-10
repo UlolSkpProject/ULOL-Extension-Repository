@@ -43,10 +43,10 @@
     {
       "id": "tag_helper",
       "name": "TAG Helper",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "loader": "tag_helper.rb",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/TAG_Helper-1.0.4.rbz",
-      "release_note": "TAG Helper 1.0.4",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/TAG_Helper-1.0.5.rbz",
+      "release_note": "TAG Helper 1.0.5",
       "source_dir": "tag_helper",
       "visibility": "visible",
       "distribution": "active",
