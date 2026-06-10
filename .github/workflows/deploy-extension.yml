@@ -12,10 +12,16 @@ on:
         type: string
 
       visibility:
-        required: true
+        required: false
         type: string
+        default: ''
 
       distribution:
+        required: false
+        type: string
+        default: ''
+
+      release_note_url:
         required: true
         type: string
 
@@ -35,14 +41,47 @@ jobs:
 
     steps:
       - name: Checkout Extension Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout Deploy Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: UlolSkpProject/ULOL-Extension-Repository
           token: ${{ secrets.DEPLOY_TOKEN }}
           path: deploy_repo
+
+      - name: Resolve Deploy Options
+        shell: bash
+        run: |
+          VISIBILITY="${{ inputs.visibility }}"
+          DISTRIBUTION="${{ inputs.distribution }}"
+
+          if [ -z "$VISIBILITY" ] || [ -z "$DISTRIBUTION" ]; then
+            TAG_NAME="${GITHUB_REF_NAME}"
+
+            VISIBILITY="visible"
+            DISTRIBUTION="active"
+
+            if [[ "$TAG_NAME" == *"-hidden-"* ]] || [[ "$TAG_NAME" == *"-hidden" ]]; then
+              VISIBILITY="hidden"
+            fi
+
+            if [[ "$TAG_NAME" == *"-preview"* ]]; then
+              DISTRIBUTION="preview"
+            elif [[ "$TAG_NAME" == *"-deprecated"* ]]; then
+              DISTRIBUTION="deprecated"
+            elif [[ "$TAG_NAME" == *"-disabled"* ]]; then
+              DISTRIBUTION="disabled"
+            elif [[ "$TAG_NAME" == *"-active"* ]]; then
+              DISTRIBUTION="active"
+            fi
+          fi
+
+          echo "INPUT_VISIBILITY=$VISIBILITY" >> "$GITHUB_ENV"
+          echo "INPUT_DISTRIBUTION=$DISTRIBUTION" >> "$GITHUB_ENV"
+
+          echo "Resolved visibility: $VISIBILITY"
+          echo "Resolved distribution: $DISTRIBUTION"
 
       - name: Extract Metadata
         id: metadata
@@ -56,9 +95,6 @@ jobs:
           {
             echo "EXTENSION_ID=${{ inputs.extension_id }}"
             echo "LOADER_FILE=${{ inputs.loader_file }}"
-            echo "SOURCE_DIR=${{ inputs.loader_file }}"
-            echo "SOURCE_DIR=${SOURCE_DIR%.rb}"
-
             echo "EXTENSION_NAME=${{ steps.metadata.outputs.name }}"
             echo "EXTENSION_VERSION=${{ steps.metadata.outputs.version }}"
             echo "EXTENSION_CREATOR=${{ steps.metadata.outputs.creator }}"
@@ -78,8 +114,9 @@ jobs:
         run: |
           python3 deploy_repo/scripts/update_manifest.py
         env:
-          INPUT_VISIBILITY: ${{ inputs.visibility }}
-          INPUT_DISTRIBUTION: ${{ inputs.distribution }}
+          INPUT_VISIBILITY: ${{ env.INPUT_VISIBILITY }}
+          INPUT_DISTRIBUTION: ${{ env.INPUT_DISTRIBUTION }}
+          INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
           MANIFEST_PATH: deploy_repo/manifest.json
           PAGES_BASE_URL: ${{ env.PAGES_BASE_URL }}
 
