@@ -17,10 +17,10 @@
     {
       "id": "indoor3d",
       "name": "IndoorGML 3D Modeler",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "loader": "indoor3d.rb",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/IndoorGML_3D_Modeler-1.1.1.rbz",
-      "release_note": "IndoorGML 3D Modeler 1.1.1",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/IndoorGML_3D_Modeler-1.2.0.rbz",
+      "release_note": "IndoorGML 3D Modeler 1.2.0",
       "source_dir": "indoor3d",
       "visibility": "visible",
       "distribution": "preview",
