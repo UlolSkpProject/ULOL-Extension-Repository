@@ -77,7 +77,7 @@
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.0.rbz",
       "release_note": "ULOLTray 0.1.0",
       "visibility": "visible",
-      "distribution": "active"
+      "distribution": "disabled"
     }
   ]
 }
