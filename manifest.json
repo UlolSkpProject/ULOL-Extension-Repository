@@ -65,6 +65,19 @@
       "release_note": "ULOL Extension Manager 2.0.2",
       "visibility": "visible",
       "distribution": "active"
+    },
+    {
+      "id": "ulol_tray",
+      "name": "ULOLTray",
+      "version": "0.1.0",
+      "creator": "ULOL",
+      "description": "개선된 Tray 패널",
+      "loader": "ulol_tray.rb",
+      "source_dir": "ulol_tray",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.0.rbz",
+      "release_note": "ULOLTray 0.1.0",
+      "visibility": "visible",
+      "distribution": "active"
     }
   ]
 }
