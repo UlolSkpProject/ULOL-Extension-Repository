@@ -11,6 +11,7 @@
       "source_dir": "better_ruby_console",
       "visibility": "visible",
       "distribution": "active",
+      "category": "Dev",
       "creator": "ULOL",
       "description": "A zsh-like Ruby console with history, clear, and API hints."
     },
@@ -24,6 +25,7 @@
       "source_dir": "indoor3d",
       "visibility": "visible",
       "distribution": "preview",
+      "category": "SeoulSpace",
       "creator": "ULOL",
       "description": "SketchUp에서 IndoorGML 1.0 실내 공간 모델을 구축하고 CellSpace 변환, 위상 연결, GML 내보내기, geometry 검증을 수행하는 Extension."
     },
@@ -35,6 +37,7 @@
       "release_note": "RM Color Helper 1.1.0",
       "visibility": "visible",
       "distribution": "active",
+      "category": "SeoulSpace",
       "creator": "DKIM",
       "description": "공간별 SketchUp 재질 생성 및 적용 도구입니다.",
       "loader": "rm_helper.rb",
@@ -50,6 +53,7 @@
       "source_dir": "tag_helper",
       "visibility": "visible",
       "distribution": "active",
+      "category": "SeoulSpace",
       "creator": "DKIM",
       "description": "객체코드표 기반 SketchUp Tag 적용 도구입니다. 선택한 Group 또는 Component Instance에 구분, 대분류, 중분류, 층 조건으로 계산한 Tag를 적용합니다."
     },
@@ -77,7 +81,8 @@
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.0.rbz",
       "release_note": "ULOLTray 0.1.0",
       "visibility": "visible",
-      "distribution": "disabled"
+      "distribution": "disabled",
+      "category": "Etc"
     }
   ]
 }

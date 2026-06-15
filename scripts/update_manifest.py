@@ -68,6 +68,11 @@ def main() -> int:
 
     visibility = read_env("INPUT_VISIBILITY", "visible")
     distribution = read_env("INPUT_DISTRIBUTION", "active")
+    category = read_env("INPUT_CATEGORY", "Etc")
+    release_note = read_env(
+        "INPUT_RELEASE_NOTE_URL",
+        f"{extension_name} {extension_version}",
+    )
 
     if visibility not in VALID_VISIBILITY:
         raise RuntimeError(f"Invalid visibility: {visibility}")
@@ -102,9 +107,10 @@ def main() -> int:
         "loader": loader_file,
         "source_dir": source_dir,
         "download_url": download_url,
-        "release_note": f"{extension_name} {extension_version}",
+        "release_note": release_note,
         "visibility": visibility,
         "distribution": distribution,
+        "category": category,
     })
 
     extensions.sort(key=lambda item: item.get("id", ""))
@@ -117,6 +123,7 @@ def main() -> int:
     print(f"- version: {extension_version}")
     print(f"- visibility: {visibility}")
     print(f"- distribution: {distribution}")
+    print(f"- category: {category}")
     print(f"- download_url: {download_url}")
 
     return 0

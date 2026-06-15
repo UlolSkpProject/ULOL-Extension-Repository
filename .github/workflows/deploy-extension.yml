@@ -25,6 +25,11 @@ on:
         required: true
         type: string
 
+      category:
+        required: false
+        type: string
+        default: Etc
+
     secrets:
       DEPLOY_TOKEN:
         required: true
@@ -125,6 +130,7 @@ jobs:
         env:
           INPUT_VISIBILITY: ${{ env.INPUT_VISIBILITY }}
           INPUT_DISTRIBUTION: ${{ env.INPUT_DISTRIBUTION }}
+          INPUT_CATEGORY: ${{ inputs.category }}
           INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
           MANIFEST_PATH: deploy_repo/manifest.json
           PAGES_BASE_URL: ${{ env.PAGES_BASE_URL }}
