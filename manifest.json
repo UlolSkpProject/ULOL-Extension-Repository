@@ -80,8 +80,8 @@
       "source_dir": "ulol_tray",
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.1.rbz",
       "release_note": "https://u-lo-l.notion.site/Better-Tray-37abe883973b802e838af6744c771b99",
-      "visibility": "hidden",
-      "distribution": "active",
+      "visibility": "visible",
+      "distribution": "disabled",
       "category": "Etc"
     }
   ]
