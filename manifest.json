@@ -73,15 +73,15 @@
     {
       "id": "ulol_tray",
       "name": "ULOLTray",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "creator": "ULOL",
       "description": "개선된 Tray 패널",
       "loader": "ulol_tray.rb",
       "source_dir": "ulol_tray",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.0.rbz",
-      "release_note": "ttps://u-lo-l.notion.site/Better-Tray-37abe883973b802e838af6744c771b99",
-      "visibility": "visible",
-      "distribution": "disabled",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.1.rbz",
+      "release_note": "https://u-lo-l.notion.site/Better-Tray-37abe883973b802e838af6744c771b99",
+      "visibility": "hidden",
+      "distribution": "active",
       "category": "Etc"
     }
   ]
