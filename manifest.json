@@ -18,16 +18,16 @@
     {
       "id": "indoor3d",
       "name": "IndoorGML 3D Modeler",
-      "version": "1.2.4",
+      "version": "1.0.0",
       "loader": "indoor3d.rb",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/IndoorGML_3D_Modeler-1.2.4.rbz",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/IndoorGML_3D_Modeler-1.0.0.rbz",
       "release_note": "https://u-lo-l.notion.site/Indoor-Modeler-35fbe883973b80d1be3be90372b712ed",
       "source_dir": "indoor3d",
       "visibility": "visible",
       "distribution": "active",
       "category": "SeoulSpace",
       "creator": "ULOL",
-      "description": "SketchUp에서 IndoorGML 1.0 실내 공간 모델을 구축하고 CellSpace 변환, 위상 연결, GML 내보내기, geometry 검증을 수행하는 Extension."
+      "description": "SketchUp2026에서 IndoorGML(v1.0) 실내 공간 모델을 구축하고 CellSpace 변환, 위상 연결, GML 내보내기, geometry 검증을 수행하는 Extension."
     },
     {
       "id": "rm_helper",
@@ -73,13 +73,13 @@
     {
       "id": "ulol_tray",
       "name": "ULOLTray",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "creator": "ULOL",
       "description": "개선된 Tray 패널",
       "loader": "ulol_tray.rb",
       "source_dir": "ulol_tray",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.0.rbz",
-      "release_note": "ttps://u-lo-l.notion.site/Better-Tray-37abe883973b802e838af6744c771b99",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_tray/ULOLTray-0.1.1.rbz",
+      "release_note": "https://u-lo-l.notion.site/Better-Tray-37abe883973b802e838af6744c771b99",
       "visibility": "visible",
       "distribution": "disabled",
       "category": "Etc"
