@@ -60,15 +60,16 @@
     {
       "id": "ulol_extension_manager",
       "name": "ULOL Extension Manager",
-      "version": "2.0.3",
+      "version": "1.0.0",
       "creator": "ULOL",
       "description": "2026 AI활용 공간정보 구축 업무를 위한 ULOL SketchUp Extension 모음 관리자",
       "loader": "ulol_extension_manager.rb",
       "source_dir": "ulol_extension_manager",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_extension_manager/ULOL_Extension_Manager-2.0.3.rbz",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/ulol_extension_manager/ULOL_Extension_Manager-1.0.0.rbz",
       "release_note": "https://u-lo-l.notion.site/ULOL-Extension-Manager-37abe883973b8093b6fdf9763d3b1aed",
       "visibility": "visible",
-      "distribution": "active"
+      "distribution": "active",
+      "category": "Etc"
     },
     {
       "id": "ulol_tray",
