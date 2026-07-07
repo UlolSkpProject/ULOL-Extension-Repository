@@ -17,7 +17,7 @@
     },
     {
       "id": "indoor3d",
-      "name": "IndoorGML 3DModeler",
+      "name": "IndoorGML 3D Modeler",
       "version": "1.0.0",
       "loader": "indoor3d.rb",
       "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/indoor3d/IndoorGML_3D_Modeler-1.0.0.rbz",
@@ -27,7 +27,7 @@
       "distribution": "active",
       "category": "SeoulSpace",
       "creator": "ULOL",
-      "description": "SketchUp2026에서 IndoorGML(v1.0.3) 실내 공간 모델을 구축하고 CellSpace 변환, 위상 연결, GML 내보내기, geometry 검증을 수행하는 Extension."
+      "description": "SketchUp2026에서 IndoorGML(v#{Definition::INDOOR_GML_SCHEMA_VERSION}) 실내 공간 모델을 구축하고 CellSpace 변환, 위상 연결, GML 내보내기, geometry 검증을 수행하는 Extension."
     },
     {
       "id": "rm_helper",
