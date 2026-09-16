@@ -58,6 +58,20 @@
       "category": "SeoulSpace"
     },
     {
+      "id": "seoul_space_verify",
+      "name": "Seoul Space Verify",
+      "version": "0.5.0",
+      "creator": "ULOL",
+      "description": "Seoul Space model verification extension.",
+      "loader": "seoul_space_verify.rb",
+      "source_dir": "seoul_space_verify",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/seoul_space_verify/Seoul_Space_Verify-0.5.0.rbz",
+      "release_note": "https://github.com/UlolSkpProject/SeoulSpace-Verify/releases",
+      "visibility": "visible",
+      "distribution": "preview",
+      "category": "SeoulSpace"
+    },
+    {
       "id": "tag_helper",
       "name": "TAG Helper",
       "version": "1.0.4",
