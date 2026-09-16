@@ -44,6 +44,20 @@
       "source_dir": "rm_helper"
     },
     {
+      "id": "seoul_space_verify",
+      "name": "Seoul Space Verify",
+      "version": "0.5.1",
+      "creator": "ULOL",
+      "description": "Seoul Space model verification extension.",
+      "loader": "seoul_space_verify.rb",
+      "source_dir": "seoul_space_verify",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/seoul_space_verify/Seoul_Space_Verify-0.5.1.rbz",
+      "release_note": "https://github.com/UlolSkpProject/SeoulSpace-Verify/releases",
+      "visibility": "visible",
+      "distribution": "preview",
+      "category": "SeoulSpace"
+    },
+    {
       "id": "seoulspace_obj_exporter",
       "name": "OBJ Helper",
       "version": "1.0.1",
@@ -55,20 +69,6 @@
       "release_note": "https://github.com/UlolSkpProject/SeoulSpace-obj-Exporter/releases",
       "visibility": "visible",
       "distribution": "active",
-      "category": "SeoulSpace"
-    },
-    {
-      "id": "seoul_space_verify",
-      "name": "Seoul Space Verify",
-      "version": "0.5.0",
-      "creator": "ULOL",
-      "description": "Seoul Space model verification extension.",
-      "loader": "seoul_space_verify.rb",
-      "source_dir": "seoul_space_verify",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/seoul_space_verify/Seoul_Space_Verify-0.5.0.rbz",
-      "release_note": "https://github.com/UlolSkpProject/SeoulSpace-Verify/releases",
-      "visibility": "visible",
-      "distribution": "preview",
       "category": "SeoulSpace"
     },
     {
