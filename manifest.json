@@ -31,9 +31,9 @@
     },
     {
       "id": "rm_helper",
-      "name": "RM Color Helper",
-      "version": "1.0.3",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/RM_Color_Helper-1.0.3.rbz",
+      "name": "SeoulSpace RM Helper",
+      "version": "1.0.4",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/SeoulSpace_RM_Helper-1.0.4.rbz",
       "release_note": "https://u-lo-l.notion.site/RM-Color-Helper-37abe883973b80dd9e55c6a2e84925fa",
       "visibility": "visible",
       "distribution": "active",
