@@ -73,10 +73,10 @@
     },
     {
       "id": "tag_helper",
-      "name": "TAG Helper",
-      "version": "1.0.12",
+      "name": "SeoulSpace Tag Helper",
+      "version": "1.0.13",
       "loader": "tag_helper.rb",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/TAG_Helper-1.0.12.rbz",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/tag_helper/SeoulSpace_Tag_Helper-1.0.13.rbz",
       "release_note": "https://u-lo-l.notion.site/TAG-Helper-36dbe883973b8126b3f9f0ac72d9e99c",
       "source_dir": "tag_helper",
       "visibility": "visible",
