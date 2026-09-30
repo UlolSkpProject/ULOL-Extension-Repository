@@ -31,15 +31,15 @@
     },
     {
       "id": "rm_helper",
-      "name": "SeoulSpace RM Helper",
+      "name": "RM Palette",
       "version": "1.0.4",
-      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/SeoulSpace_RM_Helper-1.0.4.rbz",
+      "download_url": "https://ulolskpproject.github.io/ULOL-Extension-Repository/rbz/rm_helper/RM_Palette-1.0.4.rbz",
       "release_note": "https://u-lo-l.notion.site/RM-Color-Helper-37abe883973b80dd9e55c6a2e84925fa",
       "visibility": "visible",
       "distribution": "active",
       "category": "SeoulSpace",
       "creator": "DKIM",
-      "description": "공간별 SketchUp 재질 생성 및 적용 도구입니다.",
+      "description": "RM 공간 별 재질 적용 도구",
       "loader": "rm_helper.rb",
       "source_dir": "rm_helper"
     },
