@@ -64,6 +64,7 @@ def main() -> int:
     extension_description = read_env("EXTENSION_DESCRIPTION")
 
     rbz_name = read_env("RBZ_NAME")
+    rbz_updated_at = read_env("RBZ_UPDATED_AT")
     pages_base_url = read_env("PAGES_BASE_URL").rstrip("/")
 
     visibility = read_env("INPUT_VISIBILITY", "visible")
@@ -107,6 +108,7 @@ def main() -> int:
         "loader": loader_file,
         "source_dir": source_dir,
         "download_url": download_url,
+        "rbz_updated_at": rbz_updated_at,
         "release_note": release_note,
         "visibility": visibility,
         "distribution": distribution,
@@ -125,6 +127,7 @@ def main() -> int:
     print(f"- distribution: {distribution}")
     print(f"- category: {category}")
     print(f"- download_url: {download_url}")
+    print(f"- rbz_updated_at: {rbz_updated_at}")
 
     return 0
 
