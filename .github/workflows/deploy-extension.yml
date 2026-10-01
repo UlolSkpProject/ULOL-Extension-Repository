@@ -123,6 +123,11 @@ jobs:
           mkdir -p "deploy_repo/rbz/${EXTENSION_ID}"
           cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/${RBZ_NAME}"
 
+      - name: Record RBZ Updated Time
+        shell: bash
+        run: |
+          echo "RBZ_UPDATED_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
+
       - name: Update Manifest
         shell: bash
         run: |
