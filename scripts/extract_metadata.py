@@ -21,10 +21,14 @@ def read_env(name: str) -> str:
 
 
 def extract_constant(text: str, key: str) -> str:
+    escaped_key = re.escape(key)
     patterns = [
-        rf"{key}\s*=\s*['\"]([^'\"]+)['\"]",
-        rf"{key}\s*=\s*%q\{{([^}}]+)\}}",
-        rf"{key}\s*=\s*%Q\{{([^}}]+)\}}",
+        rf"{escaped_key}\s*=\s*['\"]([^'\"]+)['\"]",
+        rf"{escaped_key}\s*=\s*%q\{{([^}}]+)\}}",
+        rf"{escaped_key}\s*=\s*%Q\{{([^}}]+)\}}",
+        rf"set_constant\.call\(\s*:{escaped_key}\s*,\s*['\"]([^'\"]+)['\"](?:\.freeze)?\s*,?\s*\)",
+        rf"set_constant\.call\(\s*:{escaped_key}\s*,\s*%q\{{([^}}]+)\}}(?:\.freeze)?\s*,?\s*\)",
+        rf"set_constant\.call\(\s*:{escaped_key}\s*,\s*%Q\{{([^}}]+)\}}(?:\.freeze)?\s*,?\s*\)",
     ]
 
     for pattern in patterns:
