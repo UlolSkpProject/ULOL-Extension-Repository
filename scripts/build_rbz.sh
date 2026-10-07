@@ -37,6 +37,11 @@ mkdir package
 cp "$LOADER_FILE" package/
 cp -r "$SOURCE_DIR" package/
 
+if [ "${NATIVE_SO_ONLY:-false}" = "true" ] && [ -d "package/$SOURCE_DIR/native" ]; then
+  find "package/$SOURCE_DIR/native" -type f ! -name '*.so' -delete
+  find "package/$SOURCE_DIR/native" -type d -empty -delete
+fi
+
 (
   cd package
   zip -r "../$RBZ_NAME" .
