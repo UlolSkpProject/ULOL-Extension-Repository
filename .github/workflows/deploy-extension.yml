@@ -30,6 +30,11 @@ on:
         type: string
         default: Etc
 
+      native_so_only:
+        required: false
+        type: boolean
+        default: false
+
     secrets:
       DEPLOY_TOKEN:
         required: true
@@ -116,12 +121,14 @@ jobs:
         shell: bash
         run: |
           bash deploy_repo/scripts/build_rbz.sh
+        env:
+          NATIVE_SO_ONLY: ${{ inputs.native_so_only }}
 
       - name: Copy RBZ
         shell: bash
         run: |
           mkdir -p "deploy_repo/rbz/${EXTENSION_ID}"
-          cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/${RBZ_NAME}"
+          cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/$RBZ_NAME"
 
       - name: Record RBZ Updated Time
         shell: bash
