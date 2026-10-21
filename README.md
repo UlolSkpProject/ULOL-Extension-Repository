@@ -2,6 +2,21 @@
 
 ULOL SketchUp Extension 배포용 manifest와 RBZ 파일을 관리하는 저장소입니다.
 
+## RBZ 패키지 규칙
+
+온라인과 오프라인 배포에는 동일한 `.rbz` 파일을 사용합니다. 공통 배포 워크플로는 RBZ 루트에 `seoul_space_package.json`을 자동 생성하며, 다음 항목을 기록합니다.
+
+- `schema_version`
+- `id`
+- `name`
+- `version`
+- `loader`
+- `source_dir`
+- `description`
+- `category`
+
+온라인 설치는 `manifest.json`만 사용하고 이 내부 파일을 무시합니다. SeoulSpace Extension Manager의 오프라인 설치는 RBZ 내부 파일을 읽어 패키지를 식별하고 검증합니다.
+
 ## 배포 태그 규칙
 
 공통 배포 워크플로우는 태그 이름을 기준으로 `visibility`와 `distribution` 값을 자동 결정합니다.

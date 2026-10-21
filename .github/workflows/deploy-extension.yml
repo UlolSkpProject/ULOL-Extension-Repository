@@ -47,7 +47,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  PAGES_BASE_URL: https://ulolskpproject.github.io/ULOL-Extension-Repository
+  RAW_BASE_URL: https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main
 
 jobs:
   deploy:
@@ -115,6 +115,7 @@ jobs:
             echo "EXTENSION_VERSION=${{ steps.metadata.outputs.version }}"
             echo "EXTENSION_CREATOR=${{ steps.metadata.outputs.creator }}"
             echo "EXTENSION_DESCRIPTION=${{ steps.metadata.outputs.description }}"
+            echo "EXTENSION_CATEGORY=${{ inputs.category }}"
           } >> "$GITHUB_ENV"
 
       - name: Build RBZ
@@ -145,7 +146,7 @@ jobs:
           INPUT_CATEGORY: ${{ inputs.category }}
           INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
           MANIFEST_PATH: deploy_repo/manifest.json
-          PAGES_BASE_URL: ${{ env.PAGES_BASE_URL }}
+          RAW_BASE_URL: ${{ env.RAW_BASE_URL }}
 
       - name: Commit Manifest and RBZ
         shell: bash

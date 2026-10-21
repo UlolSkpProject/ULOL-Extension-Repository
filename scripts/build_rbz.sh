@@ -2,8 +2,12 @@
 set -euo pipefail
 
 : "${LOADER_FILE:?Missing env: LOADER_FILE}"
+: "${EXTENSION_ID:?Missing env: EXTENSION_ID}"
 : "${EXTENSION_NAME:?Missing env: EXTENSION_NAME}"
 : "${EXTENSION_VERSION:?Missing env: EXTENSION_VERSION}"
+: "${EXTENSION_DESCRIPTION:?Missing env: EXTENSION_DESCRIPTION}"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # SOURCE_DIR가 명시되지 않으면 loader_file에서 자동 추론
 # ex) rm_helper.rb -> rm_helper
@@ -36,6 +40,10 @@ mkdir package
 
 cp "$LOADER_FILE" package/
 cp -r "$SOURCE_DIR" package/
+
+SOURCE_DIR="$SOURCE_DIR" \
+  PACKAGE_METADATA_PATH="package/seoul_space_package.json" \
+  python3 "$SCRIPT_DIR/create_package_metadata.py"
 
 if [ "${NATIVE_SO_ONLY:-false}" = "true" ] && [ -d "package/$SOURCE_DIR/native" ]; then
   find "package/$SOURCE_DIR/native" -type f ! -name '*.so' -delete

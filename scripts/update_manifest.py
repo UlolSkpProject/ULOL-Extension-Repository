@@ -65,7 +65,7 @@ def main() -> int:
 
     rbz_name = read_env("RBZ_NAME")
     rbz_updated_at = read_env("RBZ_UPDATED_AT")
-    pages_base_url = read_env("PAGES_BASE_URL").rstrip("/")
+    raw_base_url = read_env("RAW_BASE_URL").rstrip("/")
 
     visibility = read_env("INPUT_VISIBILITY", "visible")
     distribution = read_env("INPUT_DISTRIBUTION", "active")
@@ -84,7 +84,7 @@ def main() -> int:
     manifest_path = Path(read_env("MANIFEST_PATH", "deploy_repo/manifest.json"))
 
     download_url = (
-        f"{pages_base_url}/rbz/{extension_id}/{rbz_name}"
+        f"{raw_base_url}/rbz/{extension_id}/{rbz_name}"
     )
 
     manifest_data, extensions = load_manifest(manifest_path)
