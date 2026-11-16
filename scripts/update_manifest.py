@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
 
 VALID_VISIBILITY = {"visible", "hidden"}
 VALID_DISTRIBUTION = {"active", "preview", "deprecated", "disabled"}
+VALID_RUBY_ABIS = {"3.2", "3.4"}
+VALID_PLATFORMS = {"win64"}
 
 
 def read_env(name: str, default: str | None = None) -> str:
@@ -66,6 +69,9 @@ def main() -> int:
     rbz_name = read_env("RBZ_NAME")
     rbz_updated_at = read_env("RBZ_UPDATED_AT")
     raw_base_url = read_env("RAW_BASE_URL").rstrip("/")
+    ruby_abi = read_env("RUBY_ABI", "")
+    platform = read_env("PLATFORM", "win64" if ruby_abi else "")
+    rbz_sha256 = read_env("RBZ_SHA256", "")
 
     visibility = read_env("INPUT_VISIBILITY", "visible")
     distribution = read_env("INPUT_DISTRIBUTION", "active")
@@ -80,6 +86,15 @@ def main() -> int:
 
     if distribution not in VALID_DISTRIBUTION:
         raise RuntimeError(f"Invalid distribution: {distribution}")
+
+    if ruby_abi and ruby_abi not in VALID_RUBY_ABIS:
+        raise RuntimeError(f"Invalid Ruby ABI: {ruby_abi}")
+
+    if ruby_abi and platform not in VALID_PLATFORMS:
+        raise RuntimeError(f"Invalid artifact platform: {platform}")
+
+    if ruby_abi and not re.fullmatch(r"[0-9a-fA-F]{64}", rbz_sha256):
+        raise RuntimeError("RBZ_SHA256 must be a 64-character SHA-256 digest for native artifacts")
 
     manifest_path = Path(read_env("MANIFEST_PATH", "deploy_repo/manifest.json"))
 
@@ -107,13 +122,38 @@ def main() -> int:
         "description": extension_description,
         "loader": loader_file,
         "source_dir": source_dir,
-        "download_url": download_url,
         "rbz_updated_at": rbz_updated_at,
         "release_note": release_note,
         "visibility": visibility,
         "distribution": distribution,
         "category": category,
     })
+
+    if ruby_abi:
+        artifact_id = f"ruby{ruby_abi.replace('.', '')}-{platform}"
+        artifact = {
+            "id": artifact_id,
+            "ruby_abi": ruby_abi,
+            "platform": platform,
+            "download_url": download_url,
+            "sha256": rbz_sha256.lower(),
+        }
+
+        artifacts = existing.get("artifacts", [])
+        if not isinstance(artifacts, list):
+            raise RuntimeError("manifest extension field 'artifacts' must be a JSON array")
+
+        artifacts = [item for item in artifacts if item.get("id") != artifact_id]
+        artifacts.append(artifact)
+        artifacts.sort(key=lambda item: item.get("id", ""))
+        existing["artifacts"] = artifacts
+        existing.pop("download_url", None)
+
+        if isinstance(manifest_data, dict):
+            manifest_data["schema_version"] = max(int(manifest_data.get("schema_version", 1)), 2)
+    else:
+        existing["download_url"] = download_url
+        existing.pop("artifacts", None)
 
     extensions.sort(key=lambda item: item.get("id", ""))
 
@@ -128,6 +168,10 @@ def main() -> int:
     print(f"- category: {category}")
     print(f"- download_url: {download_url}")
     print(f"- rbz_updated_at: {rbz_updated_at}")
+    if ruby_abi:
+        print(f"- ruby_abi: {ruby_abi}")
+        print(f"- platform: {platform}")
+        print(f"- sha256: {rbz_sha256.lower()}")
 
     return 0
 

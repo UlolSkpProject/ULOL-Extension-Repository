@@ -35,6 +35,11 @@ on:
         type: boolean
         default: false
 
+      native_build_script:
+        required: false
+        type: string
+        default: ''
+
     secrets:
       DEPLOY_TOKEN:
         required: true
@@ -50,7 +55,45 @@ env:
   RAW_BASE_URL: https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main
 
 jobs:
+  build-native:
+    if: ${{ inputs.native_build_script != '' }}
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby_abi: ['3.2', '3.4']
+
+    steps:
+      - name: Checkout Extension Repo
+        uses: actions/checkout@v5
+
+      - name: Build and Test Native Extension
+        shell: pwsh
+        env:
+          NATIVE_BUILD_SCRIPT: ${{ inputs.native_build_script }}
+          RUBY_ABI: ${{ matrix.ruby_abi }}
+        run: |
+          $scriptPath = Join-Path $env:GITHUB_WORKSPACE $env:NATIVE_BUILD_SCRIPT
+          if (-not (Test-Path -LiteralPath $scriptPath -PathType Leaf)) {
+            throw "Native build script not found: $scriptPath"
+          }
+
+          & $scriptPath `
+            -RubyAbi $env:RUBY_ABI `
+            -OutputRoot (Join-Path $env:RUNNER_TEMP 'native-stage')
+
+      - name: Upload Native Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-ruby-${{ matrix.ruby_abi }}
+          path: ${{ runner.temp }}/native-stage
+          if-no-files-found: error
+          retention-days: 1
+
   deploy:
+    needs: [build-native]
+    if: ${{ always() && (needs.build-native.result == 'success' || needs.build-native.result == 'skipped') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -63,6 +106,27 @@ jobs:
           repository: UlolSkpProject/ULOL-Extension-Repository
           token: ${{ secrets.DEPLOY_TOKEN }}
           path: deploy_repo
+
+      - name: Download Ruby 3.2 Native Artifact
+        if: ${{ inputs.native_build_script != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: native-ruby-3.2
+          path: native_artifacts/ruby3.2
+
+      - name: Download Ruby 3.4 Native Artifact
+        if: ${{ inputs.native_build_script != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: native-ruby-3.4
+          path: native_artifacts/ruby3.4
+
+      - name: Validate Native Deployment Mode
+        if: ${{ inputs.native_so_only && inputs.native_build_script == '' }}
+        shell: bash
+        run: |
+          echo "ERROR: native_so_only is deprecated. Provide native_build_script for ABI-specific builds." >&2
+          exit 1
 
       - name: Resolve Deploy Options
         shell: bash
@@ -118,25 +182,53 @@ jobs:
             echo "EXTENSION_CATEGORY=${{ inputs.category }}"
           } >> "$GITHUB_ENV"
 
-      - name: Build RBZ
+      - name: Build Standard RBZ
+        if: ${{ inputs.native_build_script == '' }}
+        id: rbz_standard
         shell: bash
         run: |
           bash deploy_repo/scripts/build_rbz.sh
         env:
           NATIVE_SO_ONLY: ${{ inputs.native_so_only }}
 
+      - name: Build Ruby 3.2 RBZ
+        if: ${{ inputs.native_build_script != '' }}
+        id: rbz32
+        shell: bash
+        env:
+          RUBY_ABI: '3.2'
+          NATIVE_ARTIFACT_DIR: native_artifacts/ruby3.2
+        run: |
+          bash deploy_repo/scripts/build_rbz.sh
+
+      - name: Build Ruby 3.4 RBZ
+        if: ${{ inputs.native_build_script != '' }}
+        id: rbz34
+        shell: bash
+        env:
+          RUBY_ABI: '3.4'
+          NATIVE_ARTIFACT_DIR: native_artifacts/ruby3.4
+        run: |
+          bash deploy_repo/scripts/build_rbz.sh
+
       - name: Copy RBZ
         shell: bash
         run: |
           mkdir -p "deploy_repo/rbz/${EXTENSION_ID}"
-          cp "$RBZ_NAME" "deploy_repo/rbz/${EXTENSION_ID}/$RBZ_NAME"
+          if [ -n "${{ inputs.native_build_script }}" ]; then
+            cp "${{ steps.rbz32.outputs.rbz_name }}" "deploy_repo/rbz/${EXTENSION_ID}/"
+            cp "${{ steps.rbz34.outputs.rbz_name }}" "deploy_repo/rbz/${EXTENSION_ID}/"
+          else
+            cp "${{ steps.rbz_standard.outputs.rbz_name }}" "deploy_repo/rbz/${EXTENSION_ID}/"
+          fi
 
       - name: Record RBZ Updated Time
         shell: bash
         run: |
           echo "RBZ_UPDATED_AT=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
 
-      - name: Update Manifest
+      - name: Update Standard Manifest Entry
+        if: ${{ inputs.native_build_script == '' }}
         shell: bash
         run: |
           python3 deploy_repo/scripts/update_manifest.py
@@ -147,6 +239,40 @@ jobs:
           INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
           MANIFEST_PATH: deploy_repo/manifest.json
           RAW_BASE_URL: ${{ env.RAW_BASE_URL }}
+
+      - name: Update Ruby 3.2 Manifest Artifact
+        if: ${{ inputs.native_build_script != '' }}
+        shell: bash
+        run: |
+          python3 deploy_repo/scripts/update_manifest.py
+        env:
+          INPUT_VISIBILITY: ${{ env.INPUT_VISIBILITY }}
+          INPUT_DISTRIBUTION: ${{ env.INPUT_DISTRIBUTION }}
+          INPUT_CATEGORY: ${{ inputs.category }}
+          INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
+          MANIFEST_PATH: deploy_repo/manifest.json
+          RAW_BASE_URL: ${{ env.RAW_BASE_URL }}
+          RBZ_NAME: ${{ steps.rbz32.outputs.rbz_name }}
+          RBZ_SHA256: ${{ steps.rbz32.outputs.rbz_sha256 }}
+          RUBY_ABI: '3.2'
+          PLATFORM: win64
+
+      - name: Update Ruby 3.4 Manifest Artifact
+        if: ${{ inputs.native_build_script != '' }}
+        shell: bash
+        run: |
+          python3 deploy_repo/scripts/update_manifest.py
+        env:
+          INPUT_VISIBILITY: ${{ env.INPUT_VISIBILITY }}
+          INPUT_DISTRIBUTION: ${{ env.INPUT_DISTRIBUTION }}
+          INPUT_CATEGORY: ${{ inputs.category }}
+          INPUT_RELEASE_NOTE_URL: ${{ inputs.release_note_url }}
+          MANIFEST_PATH: deploy_repo/manifest.json
+          RAW_BASE_URL: ${{ env.RAW_BASE_URL }}
+          RBZ_NAME: ${{ steps.rbz34.outputs.rbz_name }}
+          RBZ_SHA256: ${{ steps.rbz34.outputs.rbz_sha256 }}
+          RUBY_ABI: '3.4'
+          PLATFORM: win64
 
       - name: Commit Manifest and RBZ
         shell: bash

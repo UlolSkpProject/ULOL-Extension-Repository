@@ -27,6 +27,20 @@ def main() -> int:
         "category": read_env("EXTENSION_CATEGORY", "Etc"),
     }
 
+    ruby_abi = read_env("RUBY_ABI", "")
+    platform = read_env("PLATFORM", "")
+    artifact_id = read_env("ARTIFACT_ID", "")
+    if ruby_abi or platform or artifact_id:
+        if not (ruby_abi and platform and artifact_id):
+            raise RuntimeError(
+                "RUBY_ABI, PLATFORM, and ARTIFACT_ID must be provided together"
+            )
+        metadata.update({
+            "ruby_abi": ruby_abi,
+            "platform": platform,
+            "artifact_id": artifact_id,
+        })
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as file:
         json.dump(metadata, file, ensure_ascii=False, indent=2)
