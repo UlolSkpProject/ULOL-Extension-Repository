@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "extensions": [
     {
       "category": "Dev",
@@ -20,16 +20,31 @@
       "category": "SeoulSpace",
       "id": "indoor3d",
       "name": "IndoorGML Modeler",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "loader": "indoor3d.rb",
       "source_dir": "indoor3d",
-      "rbz_updated_at": "2026-11-05T06:38:26Z",
-      "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/indoor3d/IndoorGML_Modeler-1.0.8.rbz",
+      "rbz_updated_at": "2026-11-16T07:08:34Z",
       "release_note": "https://u-lo-l.notion.site/Indoor-Modeler-35fbe883973b80d1be3be90372b712ed",
       "visibility": "visible",
       "distribution": "active",
       "creator": "ULOL",
-      "description": "IndoorGML(v1.0.3) 실내 공간 모델구축,  CellSpace 변환, 위상 연결, GML 내보내기, 유효성 검증 도구"
+      "description": "IndoorGML(v1.0.3) 실내 공간 모델구축,  CellSpace 변환, 위상 연결, GML 내보내기, 유효성 검증 도구",
+      "artifacts": [
+        {
+          "id": "ruby32-win64",
+          "ruby_abi": "3.2",
+          "platform": "win64",
+          "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/indoor3d/IndoorGML_Modeler-1.0.9-ruby32-win64.rbz",
+          "sha256": "aa0fa5b81e8e4d8baf6bc746de8ca645928e7221d47c84c1ac548cfca1220871"
+        },
+        {
+          "id": "ruby34-win64",
+          "ruby_abi": "3.4",
+          "platform": "win64",
+          "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/indoor3d/IndoorGML_Modeler-1.0.9-ruby34-win64.rbz",
+          "sha256": "721968105efb7aad4b41cd4e6dcb84aa7409627be20986b7abb963c13f91b736"
+        }
+      ]
     },
     {
       "category": "SeoulSpace",
