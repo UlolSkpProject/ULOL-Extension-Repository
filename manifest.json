@@ -65,16 +65,31 @@
       "category": "SeoulSpace",
       "id": "seoul_space_verify",
       "name": "Verify Tool",
-      "version": "1.0.6",
+      "version": "1.0.7",
       "loader": "seoul_space_verify.rb",
       "source_dir": "seoul_space_verify",
-      "rbz_updated_at": "2026-10-30T05:01:22Z",
-      "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/seoul_space_verify/Verify_Tool-1.0.6.rbz",
+      "rbz_updated_at": "2026-11-16T07:08:39Z",
       "release_note": "https://github.com/UlolSkpProject/SeoulSpace-Verify/releases",
       "visibility": "visible",
       "distribution": "active",
       "creator": "ULOL",
-      "description": "모델링 파일 검증 참고용 도구"
+      "description": "모델링 파일 검증 참고용 도구",
+      "artifacts": [
+        {
+          "id": "ruby32-win64",
+          "ruby_abi": "3.2",
+          "platform": "win64",
+          "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/seoul_space_verify/Verify_Tool-1.0.7-ruby32-win64.rbz",
+          "sha256": "fe88b82e3d6a0de863f1dc6ff8ecc512a2d6f89817ee5250515cbee688d8b6f0"
+        },
+        {
+          "id": "ruby34-win64",
+          "ruby_abi": "3.4",
+          "platform": "win64",
+          "download_url": "https://raw.githubusercontent.com/UlolSkpProject/ULOL-Extension-Repository/refs/heads/main/rbz/seoul_space_verify/Verify_Tool-1.0.7-ruby34-win64.rbz",
+          "sha256": "fb3bd4cedaf22c3ae039ba57dda47fcc9699e42a7d55c9ae20c55ca5365603b3"
+        }
+      ]
     },
     {
       "category": "SeoulSpace",
